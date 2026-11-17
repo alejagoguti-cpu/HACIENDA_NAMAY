@@ -27,7 +27,7 @@ body{
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 .serif{
-  font-family:'Cormorant Garamond',serif;
+  font-family:'Montserrat',sans-serif;
   font-weight:300;
   text-transform:uppercase;
   line-height:1.05;
@@ -134,7 +134,7 @@ a{color:inherit;text-decoration:none}
 }
 #drawer.open{clip-path:circle(150% at 95% 5%)}
 #drawer a{
-  font:300 clamp(20px,4vw,34px)/1.2 'Cormorant Garamond',serif;
+  font:300 clamp(20px,4vw,34px)/1.2 'Montserrat',sans-serif;
   text-transform:uppercase;
   transition:opacity .2s;
   text-align:center;
@@ -186,7 +186,7 @@ a{color:inherit;text-decoration:none}
 }
 .accent-serif{
   display:block;
-  font-family:'Cormorant Garamond',serif;
+  font-family:'Montserrat',sans-serif;
   font-weight:300;
   font-size:.85em;
   letter-spacing:.04em;
@@ -864,7 +864,7 @@ body.loaded .load{animation-play-state:running}
 .logo i{color:#d9b98f}
 .hero-swatches{display:flex;justify-content:center;gap:8px;margin:0 auto 34px;flex-wrap:wrap}
 .hero-swatches span{width:30px;height:30px;border-radius:50%;background:var(--c);border:1px solid rgba(255,255,255,.25)}
-.typo-namay{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;letter-spacing:.12em;color:var(--dark)}
+.typo-namay{font-family:'Montserrat',sans-serif;font-size:34px;font-weight:600;letter-spacing:.12em;color:var(--dark)}
 .typo-sub{font-size:10px;font-weight:600;letter-spacing:.5em;color:var(--rivers-blue);margin-top:6px}
 
 /* Láminas: formato 16:9, una por fila */
@@ -938,3 +938,9 @@ body.loaded .load{animation-play-state:running}
 .row-actions{white-space:nowrap}
 .btn-lamina{display:inline-block;margin-left:6px;font-size:11px;font-weight:600;color:#7d6b5c;padding:7px 10px;border-radius:999px;border:1px solid #e8dfd2}
 .btn-lamina:hover{background:#f3ece2;color:var(--dark)}
+
+/* Todo en Montserrat */
+.typo-grid{grid-template-columns:1fr;max-width:760px;margin-left:auto;margin-right:auto}
+.serif{font-weight:300;letter-spacing:.06em}
+.accent-serif{font-weight:300;letter-spacing:.12em;font-size:.62em}
+#drawer a{font-weight:400;letter-spacing:.08em;font-size:clamp(16px,3.4vw,26px)}
