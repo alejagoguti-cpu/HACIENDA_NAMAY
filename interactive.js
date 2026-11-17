@@ -173,7 +173,7 @@
       ]
     },
     ban: {
-      img: 'assets/spec-ban05.webp', alt: 'Corte axonométrico Baño Habitación 05', tone: 'dark',
+      img: 'assets/spec-ban05.webp?v=2', alt: 'Corte axonométrico Baño Habitación 05', tone: 'light',
       items: [
         { x: 46.5, y: 33, t: 'Espejo rectangular', d: 'Luna de espejo, marco en MDF. 1.20 x 0.80 m.' },
         { x: 59, y: 26, t: 'Muro divisorio e = 15 cm', d: 'Núcleo en concreto gris vaciado in situ, pañete 1.5 cm por cara + pintura blanco hueso.' },
