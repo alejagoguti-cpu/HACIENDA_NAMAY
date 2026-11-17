@@ -9,8 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=4">
-<link rel="stylesheet" href="motion.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="motion.css?v=5">
+<link rel="stylesheet" href="explode.css?v=5">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body class="brandbook-page">
@@ -25,8 +26,8 @@
 <!-- NAVEGACIÓN -->
 <header class="nav" id="nav">
   <div class="nav-l">
-    <a class="pill sm" href="#brand-identity"><em>Identidad</em><em>Identidad</em></a>
     <a class="pill sm" href="#planos"><em>Planos</em><em>Planos</em></a>
+    <a class="pill sm" href="#explotada"><em>Explotada</em><em>Explotada</em></a>
     <a class="pill sm" href="#hab05"><em>Hab. 05</em><em>Hab. 05</em></a>
     <a class="pill sm" href="#laminas"><em>Moodboards</em><em>Moodboards</em></a>
     <a class="pill sm" href="#matriz"><em>Matriz</em><em>Matriz</em></a>
@@ -47,6 +48,7 @@
   <a href="#brand-identity">Identidad de Marca</a>
   <a href="#brand-system">Sistema Visual & Paleta</a>
   <a href="#planos">Planos Arquitectónicos</a>
+  <a href="#explotada">Habitación Explotada</a>
   <a href="#hab05">Especificaciones Habitación 05</a>
   <a href="#laminas">Moodboards por Espacio</a>
   <a href="#matriz">Matriz de Materiales</a>
@@ -214,6 +216,36 @@
   </div>
 </section>
 
+<!-- AXONOMETRÍA EXPLOTADA -->
+<section class="explode" id="explotada">
+  <div class="explode-sticky">
+    <div class="explode-copy">
+      <span class="section-tag">Habitación tipo</span>
+      <h2>La habitación,<br><b>capa por capa</b></h2>
+      <p>Sigue bajando: la cubierta se levanta y los muros se abren para mostrar cómo se arma el espacio por dentro.</p>
+      <ol class="explode-steps" id="explode-steps">
+        <li data-at="0">Habitación armada</li>
+        <li data-at=".3">Se levanta la cubierta de bambú</li>
+        <li data-at=".55">Se abren los muros</li>
+        <li data-at=".8">Interior y mobiliario</li>
+      </ol>
+      <div class="explode-meter"><span id="explode-meter"></span></div>
+    </div>
+    <div class="explode-stage" id="explode-stage">
+      <img class="xl base" src="assets/x-base.webp" alt="Axonometría explotada de la habitación" width="1600" height="1702">
+      <img class="xl wallL" src="assets/x-wallL.webp" alt="" width="1600" height="1702">
+      <img class="xl wallR" src="assets/x-wallR.webp" alt="" width="1600" height="1702">
+      <img class="xl roof" src="assets/x-roof.webp" alt="" width="1600" height="1702">
+      <div class="xtag" style="left:70%;top:17%" data-at=".35"><b>Cubierta</b>Esterilla de bambú sobre estructura de madera</div>
+      <div class="xtag" style="left:4%;top:43%" data-at=".6"><b>Muro con ventana</b>Acabado terracota</div>
+      <div class="xtag" style="left:80%;top:44%" data-at=".6"><b>Puerta corrediza</b>Salida a balcón</div>
+      <div class="xtag" style="left:10%;top:30%" data-at=".8"><b>Camarote</b>Madera con escalera integrada</div>
+      <div class="xtag" style="left:60%;top:50%" data-at=".85"><b>Celosía divisoria</b>Madera y muro con baldosa hidráulica</div>
+      <div class="xtag" style="left:44%;top:76%" data-at=".9"><b>Piso</b>Baldosa terracota sobre losa</div>
+    </div>
+  </div>
+</section>
+
 <!-- CAPÍTULO 04: HABITACIÓN 05 -->
 <section class="bb-section" id="hab05">
   <div class="bb-container">
@@ -319,8 +351,9 @@
 <!-- LIGHTBOX -->
 <div id="lightbox" role="dialog" aria-label="Lámina ampliada"><button aria-label="Cerrar">×</button><img alt=""></div>
 
-<script src="script.js?v=4"></script>
-<script src="interactive.js?v=4"></script>
-<script src="motion.js?v=4"></script>
+<script src="script.js?v=5"></script>
+<script src="interactive.js?v=5"></script>
+<script src="motion.js?v=5"></script>
+<script src="explode.js?v=5"></script>
 </body>
 </html>
