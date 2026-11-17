@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="confort.css?v=9">
 <link rel="stylesheet" href="clima.css?v=12">
 <link rel="stylesheet" href="climahab.css?v=12">
-<link rel="stylesheet" href="bioclima.css?v=12">
+<link rel="stylesheet" href="bioclima.css?v=13">
+<link rel="stylesheet" href="planbio.css?v=14">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
@@ -197,7 +198,7 @@
     <div class="bb-sec-header rv">
       <span class="section-tag">Capítulo 03</span>
       <h2 class="serif">Planos Arquitectónicos</h2>
-      <p class="lead">Recorre las plantas del proyecto: acerca con la rueda del mouse o con dos dedos, arrastra para moverte y toca los puntos para conocer cada espacio. La Habitación 5 te lleva a sus especificaciones.</p>
+      <p class="lead">Recorre las plantas del proyecto con su análisis bioclimático encima: el recorrido real del sol sobre el sitio, el viento de cada hora, la radiación que recibe cada fachada y cómo le va a cada espacio según su orientación. Acerca con la rueda o con dos dedos, arrastra y toca los puntos.</p>
     </div>
     <div class="plan-viewer rv" style="--d:.1s">
       <div class="plan-tabs" role="tablist">
@@ -211,14 +212,32 @@
           <a href="assets/planos.pdf" download aria-label="Descargar planos PDF">PDF ↓</a>
         </div>
       </div>
+      <div class="pb-bar" id="pb-bar">
+        <span class="pb-title">Análisis bioclimático sobre la planta</span>
+        <div class="pb-layers">
+          <button data-l="sol" class="on">☀ Trayectoria solar</button>
+          <button data-l="viento" class="on">≋ Viento</button>
+          <button data-l="rad">▦ Radiación en fachadas</button>
+          <button data-l="esp">⌂ Análisis por espacio</button>
+        </div>
+        <div class="pb-time">
+          <select id="pb-mes" aria-label="Mes"></select>
+          <button id="pb-play" class="on" aria-label="Reproducir o pausar"></button>
+          <input type="range" id="pb-hora" min="5.5" max="18.5" step="0.1" value="9" aria-label="Hora">
+          <b id="pb-clock">09:00</b>
+        </div>
+      </div>
       <div class="plan-frame" id="plan-frame">
         <div class="plan-stage" id="plan-stage">
           <canvas id="plan-canvas"></canvas>
+          <svg id="pb-svg" viewBox="0 0 1316 921" preserveAspectRatio="none" aria-hidden="true"></svg>
           <div class="plan-hotspots" id="plan-hotspots"></div>
         </div>
         <div class="loading-state" id="plan-loading">Cargando planos...</div>
         <div class="plan-info" id="plan-info"></div>
+        <div class="pb-legend" id="pb-legend"></div>
       </div>
+      <div class="pb-panel" id="pb-panel"></div>
     </div>
   </div>
 </section>
@@ -277,7 +296,7 @@
         <div class="ch-card">
           <h4>Orientación de la puerta corrediza</h4>
           <div class="ch-orient">
-            <button data-az="0">Norte</button><button data-az="90">Oriente</button><button data-az="180">Sur</button><button data-az="270" class="on">Occidente</button>
+            <button data-az="210" class="on">SSO · según plano (Hab. 5)</button><button data-az="0">Norte</button><button data-az="90">Oriente</button><button data-az="180">Sur</button><button data-az="270">Occidente</button>
           </div>
           <p class="ch-note">Elige hacia dónde mira la puerta en la habitación real; el sol y el viento se recalculan.</p>
           <label class="ch-open"><input type="checkbox" id="ch-open" checked> Puerta y ventana abiertas</label>
@@ -380,20 +399,8 @@
           <div class="bio-zones" id="bio-zones"></div>
         </div>
 
-        <div class="cf-block bio-card rv">
-          <div class="bio-card-head"><h4>Rosa de vientos</h4>
-            <select id="bio-rose-m" aria-label="Mes de la rosa de vientos"></select></div>
-          <div class="bio-rose" id="bio-rose"></div>
-          <div class="bio-rose-leg"><span style="--c:#b9d6e4">&lt;5 km/h</span><span style="--c:#7fb2cc">5–10</span><span style="--c:#4f8fb0">10–15</span><span style="--c:#2e5f78">&gt;15</span><b id="bio-calm"></b></div>
-        </div>
-
-        <div class="cf-block bio-card rv">
-          <div class="bio-card-head"><h4>Radiación solar por fachada</h4>
-            <select id="bio-fac-m" aria-label="Mes de radiación"></select></div>
-          <div class="bio-fac" id="bio-fac"></div>
-          <p class="bio-note" id="bio-fac-note"></p>
-        </div>
       </div>
+      <a class="bio-toplan rv" href="#planos"><b>☀ ≋ ▦</b><span>La trayectoria solar, el viento, la radiación por fachada y el análisis de cada espacio están dibujados <u>sobre los planos de planta</u> →</span></a>
 
       <div class="bio-strat rv" id="bio-strat"></div>
     </div>
@@ -541,9 +548,10 @@
 <script src="interactive.js?v=13"></script>
 <script src="confort.js?v=9"></script>
 <script src="clima.js?v=12"></script>
-<script src="bioclima.js?v=12"></script>
+<script src="bioclima.js?v=13"></script>
+<script src="planbio.js?v=13"></script>
 <script src="motion.js?v=12"></script>
 <script src="explode.js?v=9"></script>
-<script src="climahab.js?v=12"></script>
+<script src="climahab.js?v=13"></script>
 </body>
 </html>

@@ -28,7 +28,7 @@
   const DOOR_N = [0.75,0.66], WIN_N = [-0.75,0.66];
 
   /* Estado */
-  let month = new Date().getMonth(), hour = 9, doorAz = 270, open = true, playing = true;
+  let month = new Date().getMonth(), hour = 9, doorAz = 210, open = true, playing = true;
   const layers = { sol: true, viento: true, temp: true, hum: false };
 
   /* SVG */

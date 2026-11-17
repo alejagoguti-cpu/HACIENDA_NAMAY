@@ -85,7 +85,7 @@ window.NAMAY_CLIMA = fetch('assets/namay-clima.json').then(r => r.json());
 
     /* ---- 3. Rosa de vientos ---- */
     const rs = q('#bio-rose-m');
-    rs.innerHTML = '<option value="12">Todo el año</option>' + MESL.map((m, i) => `<option value="${i}">${m}</option>`).join('');
+    if (rs) rs.innerHTML = '<option value="12">Todo el año</option>' + MESL.map((m, i) => `<option value="${i}">${m}</option>`).join('');
     const COLS = ['#b9d6e4', '#7fb2cc', '#4f8fb0', '#2e5f78'];
     function drawRose(k) {
       const r = D.rose[k], max = Math.max(...r.d.map(b => b.reduce((a, c) => a + c, 0))) || 1;
@@ -104,11 +104,11 @@ window.NAMAY_CLIMA = fetch('assets/namay-clima.json').then(r => r.json());
         <g class="petals">${petals}</g><text x="${C + 4}" y="${C - Rr * .66 - 3}" class="rp">${(max * .66).toFixed(1)} %</text></svg>`;
       q('#bio-calm').textContent = `Calma: ${r.calm} %`;
     }
-    rs.addEventListener('change', () => drawRose(+rs.value)); drawRose(12);
+    if (rs) { rs.addEventListener('change', () => drawRose(+rs.value)); drawRose(12); }
 
     /* ---- 4. Radiación por fachada ---- */
     const fs = q('#bio-fac-m');
-    fs.innerHTML = '<option value="-1">Promedio anual</option>' + MESL.map((m, i) => `<option value="${i}">${m}</option>`).join('');
+    if (fs) fs.innerHTML = '<option value="-1">Promedio anual</option>' + MESL.map((m, i) => `<option value="${i}">${m}</option>`).join('');
     const year = ['N', 'E', 'S', 'O', 'H'].reduce((o, k) => (o[k] = +(D.facade.reduce((s, f) => s + f[k], 0) / 12).toFixed(2), o), {});
     function drawFac(m) {
       const f = m < 0 ? year : D.facade[m], mx = 6;
@@ -122,7 +122,7 @@ window.NAMAY_CLIMA = fetch('assets/namay-clima.json').then(r => r.json());
       const worst = ['N', 'E', 'S', 'O'].sort((a, b) => f[b] - f[a])[0], nm = { N: 'norte', E: 'oriente', S: 'sur', O: 'occidente' };
       q('#bio-fac-note').innerHTML = `kWh/m² por día. ${m < 0 ? 'En el año' : 'En ' + MESL[m].toLowerCase()} la fachada <b>${nm[worst]}</b> es la más expuesta (${f[worst].toFixed(1)}); la cubierta recibe ${f.H.toFixed(1)}, ${(f.H / f[worst]).toFixed(1)} veces más que cualquier muro.`;
     }
-    fs.addEventListener('change', () => drawFac(+fs.value)); drawFac(-1);
+    if (fs) { fs.addEventListener('change', () => drawFac(+fs.value)); drawFac(-1); }
 
     /* ---- 5. Estrategias calculadas para Namay ---- */
     const Z = D.zones;

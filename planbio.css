@@ -1,0 +1,70 @@
+/* ===== ANÁLISIS BIOCLIMÁTICO SOBRE LOS PLANOS ===== */
+#pb-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+#pb-svg *{vector-effect:non-scaling-stroke}
+.pb-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 16px;border-bottom:1px solid #f0e8dc;background:linear-gradient(90deg,#fffaf2,#fff)}
+.pb-title{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--rivers-blue)}
+.pb-layers{display:flex;flex-wrap:wrap;gap:6px}
+.pb-layers button{font:600 11.5px 'Montserrat',sans-serif;padding:7px 12px;border-radius:999px;border:1px solid var(--border);background:#fff;color:#7d6b5c;cursor:pointer;transition:all .2s}
+.pb-layers button.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+.pb-time{display:flex;align-items:center;gap:8px;margin-left:auto;flex:1;min-width:280px;max-width:460px}
+.pb-time select{padding:7px 8px;border-radius:10px;border:1px solid var(--border);font:500 12px 'Montserrat',sans-serif;background:#faf6f0;color:var(--dark)}
+.pb-time input{flex:1;accent-color:#e8b33a;cursor:pointer}
+.pb-time b{font-size:15px;font-weight:600;color:var(--dark);min-width:48px}
+#pb-play{width:34px;height:34px;flex:none;border-radius:50%;border:1px solid var(--dark);background:#fff;color:var(--dark);cursor:pointer;font-size:11px}
+#pb-play.on{background:var(--dark);color:#fff}
+#pb-play::before{content:"▶"}#pb-play.on::before{content:"❚❚";font-size:9px}
+
+/* capas */
+.pb-ring{fill:none;stroke:#3e2a20;stroke-width:1.2;stroke-dasharray:4 6;opacity:.45}
+.pb-ring.thin{opacity:.25}
+.pb-card{font:800 22px 'Montserrat',sans-serif;fill:#3e2a20;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:5}
+.pb-path{fill:none;stroke-width:4;opacity:.9;stroke-linecap:round}
+.pb-pl{font:700 13px 'Montserrat',sans-serif;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:4}
+.pb-ht{font:700 11px 'Montserrat',sans-serif;fill:#7d6b5c;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:3}
+.pb-hdot{stroke:#fff;stroke-width:1.5}
+.pb-month{fill:none;stroke:#3e2a20;stroke-width:2.5;stroke-dasharray:2 7;stroke-linecap:round}
+.pb-ray{stroke:#ffcf4d;stroke-width:3;stroke-dasharray:10 8;animation:pbflow 1.2s linear infinite}
+.pb-shadow{stroke:#3e2a20;stroke-width:10;opacity:.25;stroke-linecap:round}
+.pb-halo{fill:#ffd25a;opacity:.35;animation:pbhalo 2.4s ease-in-out infinite}
+.pb-sun{fill:#ffb800;stroke:#fff;stroke-width:3}
+@keyframes pbhalo{50%{opacity:.12}}
+.pb-wind{fill:none;stroke:#4f8fb0;stroke-width:3;stroke-linecap:round;stroke-dasharray:28 60;opacity:.75;animation:pbflow linear infinite}
+@keyframes pbflow{to{stroke-dashoffset:-176}}
+.pb-rad{fill:none;stroke-width:26;stroke-linecap:butt;opacity:.85}
+.pb-lit{fill:none;stroke:#fff3a8;stroke-width:6;stroke-linecap:round;opacity:.95;filter:drop-shadow(0 0 6px #ffcf4d)}
+.pb-radt{font:800 15px 'Montserrat',sans-serif;fill:#8a2f1c;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:4}
+.pb-orient{stroke-width:4;stroke-linecap:round}
+.pb-esp{stroke:#fff;stroke-width:3;opacity:.95}
+.pb-espt{font:800 11px 'Montserrat',sans-serif;fill:#fff;text-anchor:middle}
+
+/* leyenda flotante */
+.pb-legend{position:absolute;right:14px;top:14px;z-index:3;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4a3a2e;box-shadow:0 10px 26px rgba(62,42,32,.14);pointer-events:none;max-width:260px}
+.pb-legend b{font-size:13px;color:var(--dark)}
+.pb-scale{display:flex;align-items:center;gap:6px;font-size:11px;color:#7d6b5c}
+.pb-scale i{width:70px;height:8px;border-radius:4px;background:linear-gradient(90deg,#e8b33a,#b03a24)}
+.pb-ia{font-size:12px;line-height:1.5;color:#4a3a2e;background:#faf6f0;border-radius:8px;padding:8px 10px;margin:6px 0 8px}
+
+/* panel por espacio */
+.pb-panel{max-height:0;overflow:hidden;transition:max-height .6s var(--ease)}
+.pb-panel.on{max-height:2400px;padding:18px 16px 20px;border-top:1px solid #f0e8dc}
+.pb-panel h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dark);margin-bottom:12px}
+.pb-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.pb-c{border:1px solid var(--border);border-left:5px solid var(--c);border-radius:12px;padding:12px 14px;background:#fff;animation:pop .45s var(--ease) both;animation-delay:calc(var(--i) * .05s)}
+.pb-c-h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.pb-c-h b{font-size:14px;color:var(--dark)}
+.pb-c-h span{font-size:11px;color:#9a8573;white-space:nowrap}
+.pb-c-m{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:10px 0 8px}
+.pb-c-m span{font-size:9.5px;color:#9a8573;line-height:1.2;text-align:center;background:#faf6f0;border-radius:8px;padding:6px 2px}
+.pb-c-m b{display:block;font-size:14px;color:var(--dark)}
+.pb-c ul{list-style:none;display:grid;gap:4px}
+.pb-c li{font-size:12px;line-height:1.45;color:#5c4a3c;padding-left:14px;position:relative}
+.pb-c li::before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:50%;background:var(--c)}
+.bio-toplan{display:flex;align-items:center;gap:14px;justify-content:center;margin:22px auto 0;max-width:820px;background:var(--dark);color:#f3ece2;border-radius:999px;padding:14px 24px;font-size:13.5px;transition:transform .25s var(--ease)}
+.bio-toplan b{color:#e8b33a;letter-spacing:.2em}
+.bio-toplan:hover{transform:translateY(-3px)}
+@media (max-width:768px){
+  .pb-time{margin-left:0;max-width:none}
+  .pb-legend{top:auto;bottom:10px;right:10px;font-size:10.5px;max-width:200px;padding:8px 10px}
+}
+.pb-time{flex:1 1 320px;max-width:none}
+.pb-time input{min-width:0}
