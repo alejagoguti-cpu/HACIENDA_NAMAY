@@ -10,11 +10,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=9">
-<link rel="stylesheet" href="motion.css?v=9">
+<link rel="stylesheet" href="motion.css?v=12">
 <link rel="stylesheet" href="explode.css?v=9">
 <link rel="stylesheet" href="confort.css?v=9">
-<link rel="stylesheet" href="clima.css?v=9">
-<link rel="stylesheet" href="climahab.css?v=10">
+<link rel="stylesheet" href="clima.css?v=12">
+<link rel="stylesheet" href="climahab.css?v=12">
+<link rel="stylesheet" href="bioclima.css?v=12">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
@@ -302,7 +303,7 @@
         </div>
       </div>
     </div>
-    <p class="cf-source">Sol calculado para la latitud 4.93° N (hora solar). Temperatura, humedad y viento: promedios Open-Meteo (ERA5) 2023–2025 en el sitio. La temperatura interior es una estimación simplificada con fines ilustrativos.</p>
+    <p class="cf-source">Sol calculado para la latitud 4.93° N (hora solar). Temperatura, humedad, viento, radiación directa y nubosidad: día típico hora por hora de cada mes (Open-Meteo ERA5, 2023–2025) en el sitio. La temperatura interior es una estimación simplificada con fines ilustrativos.</p>
   </div>
 </section>
 
@@ -356,6 +357,45 @@
         <div class="cf-chart" id="cf-chart"></div>
         <div class="cf-legend"><span class="lg-band">Temp. mín–máx</span><span class="lg-mean">Temp. media</span><span class="lg-hum">Humedad</span><span class="lg-rain">Lluvia</span></div>
       </div>
+    </div>
+
+    <!-- Análisis bioclimático del sitio (datos horarios reales) -->
+    <div class="bio" id="bio">
+      <div class="bio-head rv">
+        <h3 class="subsection-title">Análisis bioclimático del sitio</h3>
+        <p id="bio-intro">Cargando datos horarios del sitio…</p>
+      </div>
+
+      <div class="bio-grid">
+        <div class="cf-block bio-card rv">
+          <div class="bio-card-head"><h4>Día típico de cada mes</h4>
+            <div class="bio-seg" id="bio-carpet-var"><button data-v="t" class="on">Temperatura</button><button data-v="rh">Humedad</button><button data-v="ghi">Radiación</button><button data-v="cc">Nubosidad</button></div></div>
+          <div class="bio-carpet" id="bio-carpet"></div>
+          <div class="bio-scale" id="bio-scale"></div>
+        </div>
+
+        <div class="cf-block bio-card rv">
+          <div class="bio-card-head"><h4>Carta bioclimática (Givoni)</h4><span class="bio-sub">cada punto es una combinación temperatura–humedad; su tamaño, cuántas horas al año</span></div>
+          <div class="bio-psy" id="bio-psy"></div>
+          <div class="bio-zones" id="bio-zones"></div>
+        </div>
+
+        <div class="cf-block bio-card rv">
+          <div class="bio-card-head"><h4>Rosa de vientos</h4>
+            <select id="bio-rose-m" aria-label="Mes de la rosa de vientos"></select></div>
+          <div class="bio-rose" id="bio-rose"></div>
+          <div class="bio-rose-leg"><span style="--c:#b9d6e4">&lt;5 km/h</span><span style="--c:#7fb2cc">5–10</span><span style="--c:#4f8fb0">10–15</span><span style="--c:#2e5f78">&gt;15</span><b id="bio-calm"></b></div>
+        </div>
+
+        <div class="cf-block bio-card rv">
+          <div class="bio-card-head"><h4>Radiación solar por fachada</h4>
+            <select id="bio-fac-m" aria-label="Mes de radiación"></select></div>
+          <div class="bio-fac" id="bio-fac"></div>
+          <p class="bio-note" id="bio-fac-note"></p>
+        </div>
+      </div>
+
+      <div class="bio-strat rv" id="bio-strat"></div>
     </div>
 
     <!-- 5 tipos de confort -->
@@ -500,9 +540,10 @@
 <script src="script.js?v=9"></script>
 <script src="interactive.js?v=9"></script>
 <script src="confort.js?v=9"></script>
-<script src="clima.js?v=9"></script>
-<script src="motion.js?v=9"></script>
+<script src="clima.js?v=12"></script>
+<script src="bioclima.js?v=12"></script>
+<script src="motion.js?v=12"></script>
 <script src="explode.js?v=9"></script>
-<script src="climahab.js?v=10"></script>
+<script src="climahab.js?v=12"></script>
 </body>
 </html>

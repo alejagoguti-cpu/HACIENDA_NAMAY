@@ -94,7 +94,15 @@
   const area = p => Math.abs(p.reduce((s, c, i) => { const n = p[(i + 1) % p.length]; return s + c[0] * n[1] - n[0] * c[1]; }, 0) / 2);
 
   /* Clima por hora */
+  let TYP = null; // día típico real por mes y hora (assets/namay-clima.json)
+  if (window.NAMAY_CLIMA) window.NAMAY_CLIMA.then(D => { TYP = D.typical; draw(); });
+  const hourly = (m, h, i) => { const h0 = Math.floor(h) % 24, h1 = (h0 + 1) % 24, k = h - Math.floor(h); return TYP[m][h0][i] * (1 - k) + TYP[m][h1][i] * k; };
   function weather(m, h) {
+    if (TYP) {
+      const t = hourly(m, h, 0), hr = hourly(m, h, 1);
+      const tx = Math.max(...TYP[m].map(r => r[0])), tn = Math.min(...TYP[m].map(r => r[0]));
+      return { t, hr, f: (t - tn) / (tx - tn || 1), dni: hourly(m, h, 5), cc: hourly(m, h, 7), ws: hourly(m, h, 2), wd: TYP[m][Math.round(h) % 24][3] };
+    }
     const [, tx, tn, rh] = CL[m];
     const f = h >= 5 && h <= 14 ? .5 - .5 * Math.cos(Math.PI * (h - 5) / 9) : .5 + .5 * Math.cos(Math.PI * (((h - 14) + 24) % 24) / 15);
     const t = tn + (tx - tn) * f;
@@ -126,7 +134,8 @@
         if (!ok) return;
         const poly = clip(quad.map(proj)); if (poly.length < 3) return;
         patchArea += area(poly);
-        patch += `<polygon class="patch" points="${pts(poly.map(p => [p[0], p[1], 0]))}"/>`;
+        const inten = w.dni != null ? Math.max(.12, Math.min(1, w.dni / 650)) : 1;
+        patch += `<polygon class="patch" style="opacity:${(.25 + .45 * inten).toFixed(2)}" points="${pts(poly.map(p => [p[0], p[1], 0]))}"/>`;
         quad.forEach((c, i) => { const f = proj(c), e = P(Math.max(0, Math.min(1, f[0])), Math.max(0, Math.min(1, f[1]))); const st = scr[i]; rays += `<line class="ray" x1="${st[0]}" y1="${st[1]}" x2="${e[0]}" y2="${e[1]}"/>`; });
       };
       add(doorQuad, sa > 0, [DOOR_S[0], DOOR_S[1], DOOR_S[2], DOOR_S[3]]); add(winQuad, sb > 0, [WIN_S[0], WIN_S[1], WIN_S[2], WIN_S[3]]);
@@ -134,7 +143,8 @@
     $('ch-patch').innerHTML = patch; $('ch-rays').innerHTML = rays;
 
     // viento
-    const [wd, ws] = WIND[month];
+    let [wd, ws] = WIND[month];
+    if (w.wd != null) { wd = w.wd; ws = +w.ws.toFixed(1); }
     const fromE = Math.sin(wd * Math.PI / 180), fromN = Math.cos(wd * Math.PI / 180);
     const [fa, fb] = toRoom(fromE, fromN);         // hacia dónde está la fuente, en ejes de la habitación
     const dIn = fa > .2, wIn = fb > .2;            // abertura que mira al viento
@@ -161,7 +171,7 @@
     $('ch-wind').innerHTML = layers.viento ? windHTML : '';
 
     // temperatura interior (estimación simplificada) y mapa de calor
-    const gain = patchArea * 6 + .6 - (open && (dIn || wIn) ? 1.2 : 0);
+    const gain = patchArea * 6 * (w.dni != null ? Math.min(1, w.dni / 650) : 1) + .6 - (open && (dIn || wIn) ? 1.2 : 0);
     const tin = w.t + Math.max(-1, gain);
     const col = tin < 18 ? '#6fa3c7' : tin < 21 ? '#9cc3a0' : tin <= 24 ? '#8fb36a' : tin <= 27 ? '#e8b33a' : '#d0603a';
     const heat = $('ch-heat'); heat.setAttribute('fill', col); heat.style.opacity = layers.temp ? .5 : 0;
@@ -195,7 +205,7 @@
     const hh = Math.floor(hour), mm = Math.round((hour - hh) * 60);
     q('#ch-clock').textContent = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
     q('#ch-month').textContent = MESL[month];
-    q('#ch-sunv').textContent = up ? `${(s.alt * 180 / Math.PI).toFixed(0)}° alt · ${dirName(s.az * 180 / Math.PI)}` : 'bajo el horizonte';
+    q('#ch-sunv').textContent = up ? `${(s.alt * 180 / Math.PI).toFixed(0)}° · ${dirName(s.az * 180 / Math.PI)}${w.cc != null ? ' · nubes ' + Math.round(w.cc) + ' %' : ''}` : 'bajo el horizonte';
     q('#ch-tout').textContent = `${w.t.toFixed(1)} °C`;
     q('#ch-tin').textContent = `${tin.toFixed(1)} °C`;
     q('#ch-tin').style.color = col;

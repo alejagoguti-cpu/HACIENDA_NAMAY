@@ -1,0 +1,79 @@
+/* ===== ANÁLISIS BIOCLIMÁTICO DEL SITIO ===== */
+.bio{margin-bottom:60px}
+.bio-head{text-align:center;max-width:820px;margin:0 auto 22px}
+.bio-head p{font-size:14px;line-height:1.7;color:#6b584a;margin-top:-12px}
+.bio-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:22px}
+.bio-card{margin-bottom:0;padding:22px}
+.bio-card-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.bio-card-head h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dark)}
+.bio-sub{font-size:11px;color:#9a8573;width:100%;margin-top:-6px}
+.bio-card-head select{padding:7px 10px;border-radius:10px;border:1px solid var(--border);font:500 12px 'Montserrat',sans-serif;background:#faf6f0;color:var(--dark)}
+.bio-seg{display:flex;flex-wrap:wrap;gap:4px}
+.bio-seg button{font:600 11px 'Montserrat',sans-serif;padding:6px 11px;border-radius:999px;border:1px solid var(--border);background:#fff;color:#7d6b5c;cursor:pointer;transition:all .2s}
+.bio-seg button.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+
+/* carpeta */
+.bio-carpet{position:relative}
+.cp-grid{display:grid;grid-template-columns:34px repeat(24,1fr);gap:2px;align-items:center}
+.cp-grid i{display:block;aspect-ratio:1/1.05;border-radius:3px;background:var(--c);cursor:crosshair;transition:transform .15s}
+.cp-grid i:hover{transform:scale(1.35);position:relative;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.bio-carpet.in .cp-grid i{animation:cpIn .5s var(--ease) both;animation-delay:calc(var(--k) * 12ms)}
+@keyframes cpIn{from{opacity:0;transform:scale(.3)}}
+.cp-m{font-size:10px;font-weight:600;color:#7d6b5c}
+.cp-grid b{font-size:9px;color:#9a8573;font-weight:600;text-align:center}
+.bio-scale{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:10.5px;color:#7d6b5c}
+.bio-scale div{flex:1;height:8px;border-radius:4px}
+
+/* psicrométrico */
+.psy{width:100%;height:auto;display:block}
+.psy .pz{fill:var(--c);opacity:.22;stroke:var(--c);stroke-width:1.5;transition:opacity .25s;cursor:pointer}
+.psy .pz:hover{opacity:.45}
+.psy .pz.dim{opacity:.05}
+.psy .rhc{fill:none;stroke:#c9b8a3;stroke-width:1;stroke-dasharray:3 3}
+.psy .rhc.sat{stroke:#3e2a20;stroke-dasharray:none;stroke-width:1.6}
+.psy .rht{font:600 9px 'Montserrat',sans-serif;fill:#9a8573}
+.psy .pp{fill:#3e2a20;opacity:.55;pointer-events:none;transform-box:fill-box;transform-origin:center}
+#bio.go .psy .pp{animation:ppIn .6s var(--ease) both;animation-delay:calc(var(--i) * 15ms)}
+@keyframes ppIn{from{transform:scale(0)}}
+.psy .ax{font:600 9.5px 'Montserrat',sans-serif;fill:#7d6b5c}
+.bio-zones{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.bio-zones button{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-left:4px solid var(--c);background:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s}
+.bio-zones button b{font-size:14px;color:var(--dark)}
+.bio-zones button span{font-size:11px;color:#6b584a}
+.bio-zones button.on{background:var(--c)}.bio-zones button.on b,.bio-zones button.on span{color:#fff}
+
+/* rosa */
+.bio-rose{max-width:330px;margin:0 auto}
+.rose{width:100%;height:auto;display:block}
+.rose .rr{fill:none;stroke:#e8dfd2;stroke-dasharray:3 3}
+.rose .rl{font:700 13px 'Montserrat',sans-serif;fill:#7d6b5c}
+.rose .rp{font:600 9px 'Montserrat',sans-serif;fill:#9a8573}
+.rose .petals path{transform-origin:150px 150px;animation:petal .6s var(--ease) both;animation-delay:calc(var(--i) * 30ms);stroke:#fff;stroke-width:.6}
+@keyframes petal{from{transform:scale(0) rotate(-20deg)}}
+.bio-rose-leg{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:10.5px;color:#7d6b5c;margin-top:6px}
+.bio-rose-leg span{display:inline-flex;align-items:center;gap:5px}
+.bio-rose-leg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.bio-rose-leg b{font-weight:600;color:var(--dark)}
+
+/* fachadas */
+.bio-fac{max-width:330px;margin:0 auto}
+.fac{width:100%;height:auto;display:block}
+.fac .fb rect{fill:var(--c);transition:all .6s var(--ease)}
+.fac .fb text{font:700 12px 'Montserrat',sans-serif;fill:var(--dark)}
+.fac .fk{fill:#9a8573}
+.fac .froof{fill:#3e2a20;fill-opacity:calc(.25 + var(--k) * .6);stroke:#3e2a20}
+.fac .fr1{font:600 10px 'Montserrat',sans-serif;fill:#fff;letter-spacing:.1em;text-transform:uppercase}
+.fac .fr2{font:700 16px 'Montserrat',sans-serif;fill:#fff}
+.bio-note{font-size:12.5px;color:#6b584a;line-height:1.6;text-align:center;margin-top:6px}
+
+/* estrategias */
+.bio-strat{margin-top:34px}
+.bs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.bs{background:#fff;border:1px solid var(--border);border-top:5px solid var(--c);border-radius:16px;padding:20px 22px;box-shadow:0 10px 26px rgba(62,42,32,.06)}
+.bs-v{display:block;font-size:40px;font-weight:200;color:var(--c);line-height:1}
+.bs-v small{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9a8573;margin-left:6px}
+.bs h4{font-size:15px;color:var(--dark);margin:10px 0 6px}
+.bs p{font-size:13px;line-height:1.65;color:#6b584a}
+
+@media (max-width:1024px){.bio-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.cp-grid{grid-template-columns:28px repeat(24,1fr);gap:1px}.cp-grid b{font-size:7px}}

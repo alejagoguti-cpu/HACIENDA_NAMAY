@@ -13,12 +13,48 @@
     const io = new IntersectionObserver(es => {
       if (!es[0].isIntersecting) return; io.disconnect();
       const map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true, attributionControl: true }).setView([LAT, LNG], 12);
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19, attribution: 'Imagen &copy; Esri, Maxar, Earthstar Geographics'
       }).addTo(map);
+      const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17, attribution: '&copy; OpenStreetMap, SRTM · estilo OpenTopoMap (CC-BY-SA)'
+      });
       const icon = L.divIcon({ className: 'cf-pin', html: '<span></span><i></i>', iconSize: [40, 40], iconAnchor: [20, 20] });
-      L.marker([LAT, LNG], { icon }).addTo(map).bindPopup('<b>Hacienda Namay</b><br>Finca de descanso');
-      L.circle([LAT, LNG], { radius: 180, color: '#e8b33a', weight: 2, fillOpacity: .08 }).addTo(map);
+      const mk = L.marker([LAT, LNG], { icon }).addTo(map).bindPopup('<b>Hacienda Namay</b><br>Finca de descanso');
+
+      // Trayectoria solar proyectada sobre el terreno (diagrama estereográfico, radio 160 m)
+      const rad = Math.PI / 180, Rm = 160, mLat = 111320, mLng = 111320 * Math.cos(LAT * rad);
+      const toLL = (az, alt) => { const r = Rm * (1 - alt / 90); return [LAT + r * Math.cos(az * rad) / mLat, LNG + r * Math.sin(az * rad) / mLng]; };
+      const sunAt = (doy, h) => {
+        const d = 23.45 * Math.sin(2 * Math.PI * (284 + doy) / 365) * rad, phi = LAT * rad, H = 15 * (h - 12) * rad;
+        const sa = Math.sin(phi) * Math.sin(d) + Math.cos(phi) * Math.cos(d) * Math.cos(H), alt = Math.asin(sa);
+        let az = Math.acos(Math.max(-1, Math.min(1, (Math.sin(d) - sa * Math.sin(phi)) / (Math.cos(alt) * Math.cos(phi)))));
+        if (H > 0) az = 2 * Math.PI - az; return [az / rad, alt / rad];
+      };
+      const sunG = L.layerGroup();
+      L.circle([LAT, LNG], { radius: Rm, color: '#fff', weight: 1, dashArray: '4 6', fill: false }).addTo(sunG);
+      [[172, '#d0603a', 'Solsticio de junio'], [80, '#e8b33a', 'Equinoccios'], [355, '#f4d27a', 'Solsticio de diciembre']].forEach(([doy, col, nm]) => {
+        const line = []; for (let h = 5.8; h <= 18.2; h += .1) { const [az, alt] = sunAt(doy, h); if (alt >= 0) line.push(toLL(az, alt)); }
+        L.polyline(line, { color: col, weight: 4, opacity: .95 }).bindTooltip(nm, { sticky: true }).addTo(sunG);
+        [7, 9, 12, 15, 17].forEach(h => { const [az, alt] = sunAt(doy, h); if (alt > 0) L.circleMarker(toLL(az, alt), { radius: 4, color: '#fff', weight: 1.5, fillColor: col, fillOpacity: 1 }).bindTooltip(`${nm} · ${h}:00 · altura ${alt.toFixed(0)}°`).addTo(sunG); });
+        const [azR] = sunAt(doy, 6.05), [azS] = sunAt(doy, 17.95);
+        [azR, azS].forEach(az => L.polyline([[LAT, LNG], toLL(az, 0)], { color: col, weight: 1.5, dashArray: '3 5' }).addTo(sunG));
+      });
+      sunG.addTo(map);
+
+      // Rosa de vientos real (todo el año) sobre el sitio
+      const windG = L.layerGroup();
+      window.NAMAY_CLIMA && window.NAMAY_CLIMA.then(D => {
+        const r = D.rose[12], tot = r.d.map(b => b.reduce((a, c) => a + c, 0)), mx = Math.max(...tot);
+        tot.forEach((v, i) => {
+          if (!v) return; const a0 = i * 22.5 - 9, a1 = i * 22.5 + 9, rr = 30 + v / mx * 120;
+          const p = [[LAT, LNG]]; for (let a = a0; a <= a1; a += 3) p.push([LAT + rr * Math.cos(a * rad) / mLat, LNG + rr * Math.sin(a * rad) / mLng]);
+          L.polygon(p, { color: '#4f8fb0', weight: 1, fillColor: '#7fb2cc', fillOpacity: .55 }).bindTooltip(`Viento desde ${['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'][i]}: ${v.toFixed(1)} % del tiempo`, { sticky: true }).addTo(windG);
+        });
+        const P = D.place || {}; if (P.vereda) mk.setPopupContent(`<b>Hacienda Namay</b><br>Vereda ${P.vereda}, ${P.municipio}<br>${D.elevation} m s.n.m.`);
+      });
+      windG.addTo(map);
+      L.control.layers({ 'Satélite': sat, 'Topográfico': topo }, { 'Trayectoria solar': sunG, 'Rosa de vientos': windG }, { collapsed: false, position: 'topright' }).addTo(map);
       setTimeout(() => map.flyTo([LAT, LNG], 17, { duration: 3.2 }), 600);
     }, { threshold: .3 });
     io.observe(mapEl);

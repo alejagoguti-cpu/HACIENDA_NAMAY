@@ -26,6 +26,7 @@
   watch();
   // la matriz y las láminas se generan por JS: volver a observar
   setTimeout(watch, 300);
+  addEventListener("namay:content", watch);
 
   /* 3. Contadores */
   function count(b) {
