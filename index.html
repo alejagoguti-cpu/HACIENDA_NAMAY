@@ -9,11 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=8">
-<link rel="stylesheet" href="motion.css?v=8">
-<link rel="stylesheet" href="explode.css?v=8">
-<link rel="stylesheet" href="confort.css?v=8">
-<link rel="stylesheet" href="clima.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="motion.css?v=9">
+<link rel="stylesheet" href="explode.css?v=9">
+<link rel="stylesheet" href="confort.css?v=9">
+<link rel="stylesheet" href="clima.css?v=9">
+<link rel="stylesheet" href="climahab.css?v=10">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
@@ -243,11 +244,65 @@
       <img class="xl roof" src="assets/x-roof.webp" alt="" width="1600" height="1702">
       <div class="xtag" style="left:70%;top:17%" data-at=".35"><b>Cubierta</b>Esterilla de bambú sobre estructura de madera</div>
       <div class="xtag" style="left:4%;top:43%" data-at=".6"><b>Muro con ventana</b>Acabado terracota</div>
-      <div class="xtag" style="left:80%;top:44%" data-at=".6"><b>Puerta corrediza</b>Salida a balcón</div>
+      <div class="xtag" style="left:80%;top:60%" data-at=".6"><b>Puerta corrediza</b>Salida a balcón</div>
       <div class="xtag" style="left:10%;top:30%" data-at=".8"><b>Camarote</b>Madera con escalera integrada</div>
       <div class="xtag" style="left:60%;top:50%" data-at=".85"><b>Celosía divisoria</b>Madera y muro con baldosa hidráulica</div>
       <div class="xtag" style="left:44%;top:76%" data-at=".9"><b>Piso</b>Baldosa terracota sobre losa</div>
     </div>
+  </div>
+</section>
+
+<!-- ANÁLISIS CLIMÁTICO EN LA HABITACIÓN -->
+<section class="bb-section ch" id="clima-hab">
+  <div class="bb-container">
+    <div class="bb-sec-header rv">
+      <span class="section-tag">Análisis de confort</span>
+      <h2 class="serif">El clima dentro de la habitación</h2>
+      <p class="lead">Un día completo en Namay sobre la habitación: la trayectoria real del sol para su latitud, la luz que entra por la puerta y la ventana, el viento dominante de cada mes, la temperatura y la humedad. Dale play, cambia el mes o mueve la hora.</p>
+    </div>
+    <div class="ch-wrap rv" style="--d:.1s">
+      <div class="ch-stage">
+        <img src="assets/explotada.jpg" alt="Habitación tipo en axonometría" width="1600" height="1702" loading="lazy">
+        <svg id="ch-svg" viewBox="0 0 1862 1981" preserveAspectRatio="none" aria-label="Análisis climático animado"></svg>
+        <div class="ch-clockbig"><b id="ch-clock">09:00</b><span id="ch-month">Mes</span></div>
+      </div>
+      <div class="ch-panel">
+        <div class="ch-card">
+          <h4>Tiempo</h4>
+          <div class="ch-row"><select id="ch-mes" aria-label="Mes"></select><button id="ch-play" class="on" aria-label="Reproducir o pausar el día"></button></div>
+          <input type="range" id="ch-hour" min="5.5" max="18.5" step="0.1" value="9" aria-label="Hora del día">
+          <div class="ch-hours"><span>6 am</span><span>9</span><span>12 m</span><span>3</span><span>6 pm</span></div>
+        </div>
+        <div class="ch-card">
+          <h4>Orientación de la puerta corrediza</h4>
+          <div class="ch-orient">
+            <button data-az="0">Norte</button><button data-az="90">Oriente</button><button data-az="180">Sur</button><button data-az="270" class="on">Occidente</button>
+          </div>
+          <p class="ch-note">Elige hacia dónde mira la puerta en la habitación real; el sol y el viento se recalculan.</p>
+          <label class="ch-open"><input type="checkbox" id="ch-open" checked> Puerta y ventana abiertas</label>
+        </div>
+        <div class="ch-card">
+          <h4>Capas</h4>
+          <div class="ch-layers">
+            <button data-l="sol" class="on">☀ Sol</button><button data-l="viento" class="on">≋ Viento</button><button data-l="temp" class="on">🌡 Temperatura</button><button data-l="hum">💧 Humedad</button>
+          </div>
+          <div class="ch-legend"><i style="background:#6fa3c7">&lt;18 °C</i><i style="background:#9cc3a0">18–21</i><i style="background:#8fb36a">21–24 confort</i><i style="background:#e8b33a">24–27</i><i style="background:#d0603a">&gt;27</i></div>
+        </div>
+        <div class="ch-card">
+          <h4>Lectura</h4>
+          <div class="ch-data">
+            <div><span>Sol</span><b id="ch-sunv">—</b></div>
+            <div><span>Sol en el piso</span><b id="ch-patchv">—</b></div>
+            <div><span>Exterior</span><b id="ch-tout">—</b></div>
+            <div><span>Interior (est.)</span><b id="ch-tin">—</b></div>
+            <div><span>Humedad</span><b id="ch-hr">—</b></div>
+          </div>
+          <p id="ch-windtxt"></p>
+          <ul id="ch-rec"></ul>
+        </div>
+      </div>
+    </div>
+    <p class="cf-source">Sol calculado para la latitud 4.93° N (hora solar). Temperatura, humedad y viento: promedios Open-Meteo (ERA5) 2023–2025 en el sitio. La temperatura interior es una estimación simplificada con fines ilustrativos.</p>
   </div>
 </section>
 
@@ -442,11 +497,12 @@
 <div id="lightbox" role="dialog" aria-label="Lámina ampliada"><button aria-label="Cerrar">×</button><img alt=""></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=8"></script>
-<script src="interactive.js?v=8"></script>
-<script src="confort.js?v=8"></script>
-<script src="clima.js?v=8"></script>
-<script src="motion.js?v=8"></script>
-<script src="explode.js?v=8"></script>
+<script src="script.js?v=9"></script>
+<script src="interactive.js?v=9"></script>
+<script src="confort.js?v=9"></script>
+<script src="clima.js?v=9"></script>
+<script src="motion.js?v=9"></script>
+<script src="explode.js?v=9"></script>
+<script src="climahab.js?v=10"></script>
 </body>
 </html>
