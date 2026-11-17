@@ -1,0 +1,51 @@
+/* ===== EL LUGAR: MAPA + CLIMA ===== */
+.cf-site{display:grid;grid-template-columns:1fr 1.15fr;gap:32px;align-items:stretch}
+.cf-site-map{display:flex;flex-direction:column;gap:12px}
+#cf-map{flex:1;min-height:340px;border-radius:14px;overflow:hidden;border:1px solid #f0e8dc;background:#d9cdbd;z-index:0}
+.cf-site-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cf-site-meta span{background:#faf6f0;border:1px solid #f0e8dc;border-radius:12px;padding:10px 12px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9a8573;line-height:1.4}
+.cf-site-meta b{display:block;font-size:13px;letter-spacing:0;text-transform:none;color:var(--dark)}
+.cf-site-meta i{display:block;font-style:normal}
+.cf-site-clima .subsection-title{text-align:left}
+.cf-site-clima>p{font-size:13.5px;line-height:1.7;color:#6b584a;margin:-12px 0 12px}
+.cf-pin{position:relative}
+.cf-pin span{position:absolute;inset:12px;border-radius:50%;background:#e8b33a;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.cf-pin i{position:absolute;inset:0;border-radius:50%;border:3px solid #e8b33a;animation:pulse 2s ease-out infinite}
+
+.cf-chart{position:relative}
+.cf-chart-svg{width:100%;height:auto;display:block;overflow:visible}
+.cf-chart-svg .zone{fill:#677239;opacity:.1}
+.cf-chart-svg .zt{font:600 9.5px 'Montserrat',sans-serif;fill:#677239}
+.cf-chart-svg .zt.hum,.cf-chart-svg .ax.hum{fill:#5b8fa8}
+.cf-chart-svg .hz{stroke:#5b8fa8;stroke-dasharray:3 4;opacity:.6}
+.cf-chart-svg .ax{font:600 9.5px 'Montserrat',sans-serif;fill:#9a8573}
+.cf-chart-svg .mx{font:600 10px 'Montserrat',sans-serif;fill:#7d6b5c}
+.cf-chart-svg .rain{fill:#9cc3d5;opacity:.55;transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(0);transition:transform .7s var(--ease);transition-delay:calc(var(--i) * .05s)}
+.cf-chart-svg .band{fill:#e8b33a;opacity:0;transition:opacity 1s .3s}
+.cf-chart-svg .mean{fill:none;stroke:#c0703f;stroke-width:3;stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 1.6s var(--ease) .2s}
+.cf-chart-svg .hum{fill:none;stroke:#5b8fa8;stroke-width:2.5;stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 1.8s var(--ease) .5s}
+.cf-chart-svg .dot{fill:#fff;stroke:#c0703f;stroke-width:2;opacity:0;transition:opacity .4s 1.2s}
+.cf-chart-svg .hit{fill:transparent;cursor:pointer}
+.cf-chart-svg .hit:hover{fill:rgba(150,103,75,.07)}
+.cf-chart.draw .rain{transform:scaleY(1)}
+.cf-chart.draw .band{opacity:.22}
+.cf-chart.draw .mean,.cf-chart.draw .hum{stroke-dashoffset:0}
+.cf-chart.draw .dot{opacity:1}
+.cf-tip{position:absolute;transform:translate(-50%,calc(-100% - 14px));background:var(--dark);color:#fff;font-size:11.5px;line-height:1.5;padding:8px 12px;border-radius:10px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:3}
+.cf-tip b{display:block;color:#e8c9a2}
+.cf-tip.on{opacity:1}
+.cf-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:11px;color:#7d6b5c}
+.cf-legend span{display:inline-flex;align-items:center;gap:6px}
+.cf-legend span::before{content:"";width:16px;height:8px;border-radius:3px}
+.lg-band::before{background:#e8b33a;opacity:.35}
+.lg-mean::before{background:#c0703f;height:3px !important}
+.lg-hum::before{background:#5b8fa8;height:3px !important}
+.lg-rain::before{background:#9cc3d5}
+.cf-range select{display:block;width:100%;margin-top:8px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);font:500 13px 'Montserrat',sans-serif;color:var(--dark);background:#faf6f0;text-transform:none;letter-spacing:0;cursor:pointer}
+@media (max-width:1024px){
+  .cf-site{grid-template-columns:1fr}
+  #cf-map{min-height:280px}
+}
+@media (max-width:520px){
+  .cf-site-meta{grid-template-columns:1fr}
+}

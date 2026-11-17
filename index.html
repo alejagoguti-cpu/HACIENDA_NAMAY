@@ -9,9 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
-<link rel="stylesheet" href="motion.css?v=5">
-<link rel="stylesheet" href="explode.css?v=5">
+<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="motion.css?v=8">
+<link rel="stylesheet" href="explode.css?v=8">
+<link rel="stylesheet" href="confort.css?v=8">
+<link rel="stylesheet" href="clima.css?v=8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body class="brandbook-page">
@@ -30,6 +33,7 @@
     <a class="pill sm" href="#explotada"><em>Explotada</em><em>Explotada</em></a>
     <a class="pill sm" href="#hab05"><em>Hab. 05</em><em>Hab. 05</em></a>
     <a class="pill sm" href="#laminas"><em>Moodboards</em><em>Moodboards</em></a>
+    <a class="pill sm" href="#confort"><em>Confort</em><em>Confort</em></a>
     <a class="pill sm" href="#matriz"><em>Matriz</em><em>Matriz</em></a>
   </div>
   <a class="logo" href="#top" aria-label="Hacienda Namay - Brand Book">
@@ -50,6 +54,7 @@
   <a href="#planos">Planos Arquitectónicos</a>
   <a href="#explotada">Habitación Explotada</a>
   <a href="#hab05">Especificaciones Habitación 05</a>
+  <a href="#confort">Confort &amp; Bienestar</a>
   <a href="#laminas">Moodboards por Espacio</a>
   <a href="#matriz">Matriz de Materiales</a>
   <a href="assets/moodboards.pdf" download>Descargar PDF</a>
@@ -104,7 +109,7 @@
     <div class="stat"><b data-count="25">0</b><span>Materiales especificados</span></div>
     <div class="stat"><b data-count="3">0</b><span>Espacios diseñados</span></div>
     <div class="stat"><b data-count="3">0</b><span>Plantas arquitectónicas</span></div>
-    <div class="stat"><b data-count="22">0</b><span>Especificaciones Hab. 05</span></div>
+    <div class="stat"><b data-count="1335">0</b><span>Metros sobre el nivel del mar</span></div>
   </div>
 </section>
 
@@ -271,11 +276,96 @@
   </div>
 </section>
 
-<!-- CAPÍTULO 05: MOODBOARDS -->
-<section class="bb-section" id="laminas">
+<!-- CAPÍTULO 05: CONFORT & BIENESTAR -->
+<section class="bb-section alt-bg confort" id="confort">
   <div class="bb-container">
     <div class="bb-sec-header rv">
       <span class="section-tag">Capítulo 05</span>
+      <h2 class="serif">Confort & Bienestar</h2>
+      <p class="lead">El confort es un estado de bienestar físico, mental y social sin distracciones ni molestias en el ambiente. Así responde Namay a sus cinco dimensiones: con tierra, madera, fibras, aire, luz y vegetación.</p>
+    </div>
+
+    <!-- El lugar y su clima -->
+    <div class="cf-block cf-site rv" style="--d:.1s">
+      <div class="cf-site-map">
+        <div id="cf-map" aria-label="Mapa satelital de Hacienda Namay"></div>
+        <div class="cf-site-meta">
+          <span><b>4.9328° N · 74.4465° O</b>Coordenadas</span>
+          <span><b data-count="1335">0</b> m s.n.m.<i>Altitud aprox.</i></span>
+          <span><b>Clima medio</b>Rango ASHRAE 55: 20–27,5 °C</span>
+        </div>
+      </div>
+      <div class="cf-site-clima">
+        <h3 class="subsection-title">El lugar: clima de Namay</h3>
+        <p>Promedios mensuales 2023–2025. La temperatura es estable todo el año (unos 21 °C), pero la humedad casi siempre supera el 55 % recomendado y llueve en dos temporadas. Por eso el diseño prioriza la <b>ventilación natural</b> y la <b>renovación de aire</b>.</p>
+        <div class="cf-chart" id="cf-chart"></div>
+        <div class="cf-legend"><span class="lg-band">Temp. mín–máx</span><span class="lg-mean">Temp. media</span><span class="lg-hum">Humedad</span><span class="lg-rain">Lluvia</span></div>
+      </div>
+    </div>
+
+    <!-- 5 tipos de confort -->
+    <div class="cf-types rv" style="--d:.1s">
+      <div class="cf-wheel" id="cf-wheel" role="tablist"></div>
+      <div class="cf-panel" id="cf-panel" aria-live="polite"></div>
+    </div>
+
+    <!-- Diagrama bioclimático -->
+    <div class="cf-block rv" style="--d:.1s">
+      <div class="cf-block-head">
+        <h3 class="subsection-title">Arquitectura bioclimática en la habitación</h3>
+        <p>Activa cada capa para ver cómo el diseño aprovecha las condiciones naturales a favor del huésped.</p>
+        <div class="cf-layers" id="cf-layers">
+          <button data-layer="sol" class="on">☀ Sol y protección</button>
+          <button data-layer="aire" class="on">≋ Ventilación natural</button>
+          <button data-layer="luz">◐ Luz natural</button>
+          <button data-layer="verde">❦ Vegetación</button>
+          <button data-layer="sonido">◠ Acústica</button>
+        </div>
+      </div>
+      <div class="cf-diagram" id="cf-diagram"></div>
+      <p class="cf-caption" id="cf-caption"></p>
+    </div>
+
+    <!-- Simulador -->
+    <div class="cf-block cf-sim rv" style="--d:.1s">
+      <div class="cf-sim-controls">
+        <h3 class="subsection-title">Simulador de confort térmico</h3>
+        <p>Rangos de confort adaptativo según ASHRAE 55 y humedad recomendada del 45 al 55 %. Mueve los controles y mira cómo respondería la Habitación 05.</p>
+        <div class="cf-seg" id="cf-clima">
+          <button data-c="frio">Clima frío</button>
+          <button data-c="medio" class="on">Clima medio</button>
+          <button data-c="calido">Clima cálido</button>
+        </div>
+        <label class="cf-range">Mes en Namay (datos reales)<select id="cf-mes"><option value="">— Ajuste manual —</option></select></label>
+        <label class="cf-range">Temperatura interior <b id="cf-tv">22 °C</b><input type="range" id="cf-t" min="12" max="34" step=".5" value="22"></label>
+        <label class="cf-range">Humedad relativa <b id="cf-hv">50 %</b><input type="range" id="cf-h" min="20" max="90" step="1" value="50"></label>
+        <label class="cf-range">Ocupantes <b id="cf-ov">2</b><input type="range" id="cf-o" min="1" max="4" step="1" value="2"></label>
+      </div>
+      <div class="cf-sim-out">
+        <div class="cf-gauge" id="cf-gauge">
+          <svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="84" class="g-bg"/><circle cx="100" cy="100" r="84" class="g-fg" id="cf-arc"/></svg>
+          <div class="cf-gauge-in"><b id="cf-score">100</b><span>índice de confort</span></div>
+        </div>
+        <p class="cf-verdict" id="cf-verdict"></p>
+        <ul class="cf-actions" id="cf-actions"></ul>
+      </div>
+    </div>
+
+    <!-- Materiales y confort -->
+    <div class="cf-block rv" style="--d:.1s">
+      <h3 class="subsection-title">Materiales de Namay y su aporte al confort</h3>
+      <div class="cf-mats" id="cf-mats"></div>
+    </div>
+
+    <p class="cf-source">Contenido adaptado del Diplomado en Arquitectura Interior 2026, módulo <i>Confort, Bienestar y Productividad en Arquitectura Interior</i> (Facultad de Arquitectura y Diseño, Pontificia Universidad Javeriana). Clima: reanálisis histórico Open-Meteo (ERA5), promedios 2023–2025 en las coordenadas del proyecto. Imagen satelital: Esri.</p>
+  </div>
+</section>
+
+<!-- CAPÍTULO 06: MOODBOARDS -->
+<section class="bb-section" id="laminas">
+  <div class="bb-container">
+    <div class="bb-sec-header rv">
+      <span class="section-tag">Capítulo 06</span>
       <h2 class="serif">Moodboards por Espacio</h2>
       <p class="lead">Las láminas originales de diseño interior, renderizadas en alta resolución. Cada material de la lámina es clicable y abre el producto en la tienda del proveedor. Haz clic en el fondo para ampliar la lámina y pasa el cursor por la paleta para ver los códigos de color.</p>
       <div class="header-action-center">
@@ -290,7 +380,7 @@
 <section class="bb-section alt-bg" id="matriz">
   <div class="bb-container">
     <div class="bb-sec-header rv">
-      <span class="section-tag">Capítulo 06</span>
+      <span class="section-tag">Capítulo 07</span>
       <h2 class="serif">Matriz de Materiales & Equipamiento</h2>
       <p class="lead">Todos los elementos de los moodboards en una tabla: código, espacio, acabado, uso en el proyecto, proveedor y enlace directo al producto.</p>
     </div>
@@ -351,9 +441,12 @@
 <!-- LIGHTBOX -->
 <div id="lightbox" role="dialog" aria-label="Lámina ampliada"><button aria-label="Cerrar">×</button><img alt=""></div>
 
-<script src="script.js?v=5"></script>
-<script src="interactive.js?v=5"></script>
-<script src="motion.js?v=5"></script>
-<script src="explode.js?v=5"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="script.js?v=8"></script>
+<script src="interactive.js?v=8"></script>
+<script src="confort.js?v=8"></script>
+<script src="clima.js?v=8"></script>
+<script src="motion.js?v=8"></script>
+<script src="explode.js?v=8"></script>
 </body>
 </html>
